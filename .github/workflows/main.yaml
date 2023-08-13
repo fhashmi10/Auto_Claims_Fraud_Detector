@@ -86,9 +86,9 @@ jobs:
         run: |
          docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
          
-      # - name: Stop and remove container if running
-      #   run: |
-      #    docker ps -q --filter "name=mlgen" | grep -q . && docker stop mlproj && docker rm -fv mlproj
+      #keep comment only need for first run # name: Stop and remove container if running
+      #keep comment only need for first run #  run: |
+      #keep comment only need for first run #    docker ps -q --filter "name=mlgen" | grep -q . && docker stop mlproj && docker rm -fv mlproj
        
       - name: Run Docker Image to serve users
         run: |

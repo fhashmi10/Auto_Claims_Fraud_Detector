@@ -1,32 +1,20 @@
 """Module to train models"""
-import numpy as np
 from sklearn.model_selection import GridSearchCV
+from src.entities.config_entity import DataConfig, ModelConfig
 from src.utils.common import save_object
-from src.entities.config_entity import DataTransformationConfig, ModelConfig
+from src.utils.helper import load_split_data, perform_data_transformation
 from src import logger
 
 
 class ModelTrainer:
     """Class to train models"""
 
-    def __init__(self,
-                 models: list, data_config=DataTransformationConfig, model_config=ModelConfig):
+    def __init__(self, models: list,
+                 data_config=DataConfig,
+                 model_config=ModelConfig):
         self.models = models
         self.data_config = data_config
         self.model_config = model_config
-
-    def load_train_data(self):
-        """Method to load test data"""
-        try:
-            x_train = np.load(
-                self.data_config.data_transformed_x_train_array_path, allow_pickle=True)
-            y_train = np.load(
-                self.data_config.data_transformed_y_train_array_path, allow_pickle=True)
-            return x_train, y_train
-        except AttributeError as ex:
-            raise ex
-        except Exception as ex:
-            raise ex
 
     def perform_grid_search(self, model, param, x_train, y_train) -> any:
         """Method to perform grid search cv"""
@@ -42,13 +30,19 @@ class ModelTrainer:
         except Exception as ex:
             raise ex
 
-    def train_models(self):
+    def train(self):
         """Method to train the models one by one"""
         try:
             # Load training data
-            x_train, y_train = self.load_train_data()
+            x_train, y_train = load_split_data(data_path=self.data_config.train_split_path,
+                                               target_column=self.data_config.target_column)
 
-            # Train the models
+            # Transform training data
+            x_train_transformed = perform_data_transformation(
+                transformer_path=self.data_config.transformer_path,
+                input_data=x_train)
+
+            # Train all models
             for model in self.models:
                 try:
                     model_name = type(model).__name__
@@ -59,16 +53,16 @@ class ModelTrainer:
 
                 # Get best params using grid search
                 best_params = self.perform_grid_search(
-                    model=model, param=param, x_train=x_train, y_train=y_train)
+                    model=model, param=param, x_train=x_train_transformed, y_train=y_train)
 
                 # Use gsv best params to train model
                 model.set_params(**best_params)
                 logger.info("Training started for %s", model_name)
-                model.fit(x_train, y_train)
+                model.fit(x_train_transformed, y_train)
                 logger.info("Training completed for %s", model_name)
 
                 # Save the model
-                model_save_path = self.model_config.model_trained_path+"/"+model_name+".pkl"
+                model_save_path = self.model_config.trained_models_path+"/"+model_name+".pkl"
                 save_object(file_path=model_save_path, obj=model)
                 logger.info("%s  model saved to disk", model_name)
         except AttributeError as ex:

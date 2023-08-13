@@ -3,18 +3,23 @@ from urllib.parse import urlparse
 import numpy as np
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 import mlflow
-from src.entities.config_entity import DataTransformationConfig, ModelConfig
+from src.entities.config_entity import DataConfig, ModelConfig, EvalConfig
 from src.utils.common import get_file_paths_in_folder, \
     save_object, load_object, save_json
+from src.utils.helper import load_split_data, perform_data_transformation
 from src import logger
 
 
 class ModelEvaluator:
     """Class to evaluate models"""
 
-    def __init__(self, data_config=DataTransformationConfig, model_config=ModelConfig):
+    def __init__(self,
+                 data_config=DataConfig,
+                 model_config=ModelConfig,
+                 eval_config=EvalConfig):
         self.data_config = data_config
         self.model_config = model_config
+        self.eval_config = eval_config
 
     @staticmethod
     def r2_score(actual, predicted):
@@ -53,19 +58,6 @@ class ModelEvaluator:
         except Exception as ex:
             raise ex
 
-    def load_test_data(self):
-        """Method to load test data"""
-        try:
-            x_test = np.load(
-                self.data_config.data_transformed_x_test_array_path)
-            y_test = np.load(
-                self.data_config.data_transformed_y_test_array_path)
-            return x_test, y_test
-        except AttributeError as ex:
-            raise ex
-        except Exception as ex:
-            raise ex
-
     def evaluate_models(self, file_paths: list, x_test, y_test):
         """Method to evaluate models"""
         try:
@@ -80,7 +72,7 @@ class ModelEvaluator:
                 y_test_pred = model.predict(x_test)
 
                 # Evaluate
-                eval_metrics: list = self.model_config.evaluation_metric.split(
+                eval_metrics: list = self.eval_config.eval_metrics.split(
                     ',')
                 test_model_scores = {}
                 for metric in eval_metrics:
@@ -108,7 +100,7 @@ class ModelEvaluator:
             # dagshub uri, username and password will need to be
             # exported as env variabls using gitbash terminal
             # commented as of now - experiments saved to local and model registry not done
-            # mlflow.set_registry_uri(self.model_config.mlflow_uri)
+            # mlflow.set_registry_uri(self.eval_config.mlflow_uri)
             tracking_url_type_store = urlparse(
                 mlflow.get_tracking_uri()).scheme
 
@@ -139,7 +131,7 @@ class ModelEvaluator:
     def get_best_score(scores: dict, metric_name: str):
         """Method to get the best score"""
         try:
-            if metric_name=="r2_score":
+            if metric_name == "r2_score":
                 return max(sorted(scores.values()))
             return min(sorted(scores.values()))
         except Exception as ex:
@@ -151,11 +143,11 @@ class ModelEvaluator:
             # Save all results to json
             logger.info("Saving Results to json file")
             save_json(
-                file_path=self.model_config.evaluation_score_json_path, data=result)
+                file_path=self.eval_config.eval_scores_path, data=result)
 
             # Build a new dictionary with only desired metric to get best model
             result_dict = {}
-            best_metric = self.model_config.evaluation_metric_best_model
+            best_metric = self.eval_config.eval_metric_selection
             for key, value in result.items():
                 for key_2, value_2 in value.items():
                     if key_2 == best_metric:
@@ -171,7 +163,7 @@ class ModelEvaluator:
                 file_path=self.model_config.final_model_path, obj=best_model)
             logger.info("%s is the best model with %s as %s",
                         best_model_name,
-                        self.model_config.evaluation_metric_best_model,
+                        best_metric,
                         best_model_score)
 
             # Log ml flow
@@ -185,12 +177,19 @@ class ModelEvaluator:
         """Method to evaluate models"""
         try:
             # Load test data
-            x_test, y_test = self.load_test_data()
+            x_test, y_test = load_split_data(data_path=self.data_config.test_split_path,
+                                             target_column=self.data_config.target_column)
+
+            # Transform test data
+            x_test_transformed = perform_data_transformation(
+                transformer_path=self.data_config.transformer_path,
+                input_data=x_test)
+
             # Evaluate models
             file_paths = get_file_paths_in_folder(
-                self.model_config.model_trained_path)
+                self.model_config.trained_models_path)
             trained_models, result = self.evaluate_models(file_paths=file_paths,
-                                                          x_test=x_test, y_test=y_test)
+                                                          x_test=x_test_transformed, y_test=y_test)
             # Save the best model
             self.save_best_model(trained_models=trained_models, result=result)
         except AttributeError as ex:

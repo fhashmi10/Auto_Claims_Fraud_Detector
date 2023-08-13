@@ -15,17 +15,18 @@ class ModelTrainerPipeline():
         """Method to invoke model training"""
         try:
             config = ConfigurationManager()
-            data_config = config.get_data_transformation_config()
+            data_config = config.get_data_config()
             model_config = config.get_model_config()
 
             # Get list of models to train
             models = build_models_list(
-                model_objective=model_config.model_objective)
-				
+                model_objective=model_config.model_task)
+
             # Train models
             model_trainer = ModelTrainer(models=models,
-                                         data_config=data_config, model_config=model_config)
-            model_trainer.train_models()
+                                         data_config=data_config,
+                                         model_config=model_config)
+            model_trainer.train()
         except Exception as ex:
             raise ex
 
