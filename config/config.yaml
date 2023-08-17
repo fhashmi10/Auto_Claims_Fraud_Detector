@@ -21,7 +21,9 @@ model:
 
 
 evaluation:
-  eval_metrics: accuracy_score
+  is_binary: True # True if binary classification/Ignored for regression
+  pos_label: N # One of class labels - only needed for binary classification
+  eval_metrics: precision_score, recall_score, accuracy_score
   eval_metric_selection: accuracy_score # Can only provide one metric here as best model selection criteria
   eval_scores_path: artifacts/models/c.evaluation_score/scores.json
   mlflow_uri:
