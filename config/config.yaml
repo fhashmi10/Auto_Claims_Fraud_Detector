@@ -1,8 +1,6 @@
-schema:
-  one_hot_cols:
-  binary_map_cols:
-  ordinal_cols:
-  numerical_cols:
+schema: # Comma separated column names - ignored if not specified
+  ordinal_cols: 
+  date_columns: 
   date_columns: policy_bind_date, incident_date
 
 
@@ -27,4 +25,4 @@ evaluation:
   eval_metrics: precision_score, recall_score, accuracy_score
   eval_metric_selection: accuracy_score # Can only provide one metric here as best model selection criteria
   eval_scores_path: artifacts/models/c.evaluation_score/scores.json
-  mlflow_uri:
+  mlflow_uri: # Uses local if not specified

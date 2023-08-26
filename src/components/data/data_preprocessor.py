@@ -3,11 +3,12 @@ import pandas as pd
 import numpy as np
 from src import logger
 
+
 @staticmethod
 def preprocess_data(data_frame) -> pd.DataFrame:
     """Method to perform data preprocessing"""
     try:
-		# Drop unneccessary columns
+        # Drop unneccessary columns
         data_frame.drop('_c39', axis=1, inplace=True)
         data_frame.drop('incident_location', axis=1, inplace=True)
 
@@ -22,13 +23,19 @@ def preprocess_data(data_frame) -> pd.DataFrame:
 
         # Derived Metrics
         data_frame[['policy_csl_low', 'policy_csl_high']
-                    ] = data_frame['policy_csl'].str.split('/', expand=True)
+                   ] = data_frame['policy_csl'].str.split('/', expand=True)
         data_frame[['policy_csl_low', 'policy_csl_high']] = data_frame[[
             'policy_csl_low', 'policy_csl_high']].apply(pd.to_numeric)
         data_frame.drop('policy_csl', axis=1, inplace=True)
 
         # Replace bad characters with nan
         data_frame.replace('?', np.nan, inplace=True)
+
+        # Bad data handling
+        data_frame["umbrella_limit"] = data_frame["umbrella_limit"].apply(
+            lambda x: 1000000 if x == -1000000 else x)
+
+        # Outlier handling
         return data_frame
     except Exception as ex:
         logger.exception("Exception occured while pre-processing data %s", ex)
