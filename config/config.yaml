@@ -1,6 +1,5 @@
 schema: # Comma separated column names - ignored if not specified
   ordinal_cols: 
-  date_columns: 
   date_columns: policy_bind_date, incident_date
 
 
