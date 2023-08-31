@@ -1,5 +1,5 @@
 schema: # Comma separated column names - ignored if not specified
-  ordinal_cols: 
+  ordinal_cols: insured_education_level
   date_columns: policy_bind_date, incident_date
 
 
@@ -15,7 +15,7 @@ model:
   model_task: classification # regression/classification
   trained_models_path: artifacts/models/a.trained_models/
   final_model_path: artifacts/models/b.final_model/model.pkl
-  selected_model: # value if when you have finalized your model and want to fine tune just that; else leave blank
+  selected_model: AdaBoostClassifier # value if when you have finalized your model and want to fine tune just that; else leave blank
 
 
 evaluation:

@@ -10,7 +10,7 @@
     <div class="section-header bg-primary text-white">
         <div class="container">
             <div class="row justify-content-center">
-                <h3 class="text-center">Math Score Prediction</h3>
+                <h3 class="text-center">Auto Claims Fraud Detector</h3>
             </div>
         </div>
     </div>
@@ -20,151 +20,240 @@
         <!-- Section -->
         <div class="section section-md pt-4">
             <div class="container">
-                <!--<div class="text-center">
-                        <label class="form-label">Enter student details</label>
-                    </div>-->
-                    col_months_as_customer	
-                    col_age	
-                    col_policy_number	
-                    col_policy_bind_date	
-                    col_policy_state
-                    col_policy_csl
-                    col_policy_deductable
-                    col_policy_annual_premium
-                    col_umbrella_limit
-                    col_insured_zip
-                    col_insured_sex
-                    col_insured_education_level
-                    col_insured_occupation
-                    col_insured_hobbies
-                    col_insured_relationship
-                    col_capital-gains
-                    col_capital-loss
-                    col_incident_date
-                    col_incident_type
-                    col_collision_type
-                    col_incident_severity
-                    col_authorities_contacted
-                    col_incident_state
-                    col_incident_city
-                    col_incident_location
-                    col_incident_hour_of_the_day
-                    col_number_of_vehicles_involved
-                    col_property_damage
-                    col_bodily_injuries
-                    col_witnesses
-                    col_police_report_available
-                    col_total_claim_amount
-                    col_injury_claim
-                    col_property_claim
-                    col_vehicle_claim
-                    col_auto_make
-                    col_auto_model
-                    col_auto_year
-                    
+                <div class="row mb-4 mb-lg-5">
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Sex</label>
+                        <select class="form-select" name="col_insured_sex" required>
+                            <option selected>MALE</option>
+                            <option>FEMALE</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Age</label>
+                        <input class="form-control" type="number" name="col_age" min='0'
+                            max='100' value='30' required />
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Months As Customer</label>
+                        <input class="form-control" type="number" name="col_months_as_customer" min='0' 
+                            max='100' value='24' required />
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Education</label>
+                        <select class="form-select" name="col_insured_education_level" required>
+                            <option selected>Associate</option>
+                            <option>College</option>
+                            <option>High School</option>
+                            <option>JD</option>
+                            <option>Masters</option>
+                            <option>MD</option>
+                            <option>PhD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-4 mb-lg-5">
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Relationship</label>
+                        <select class="form-select" name="col_insured_relationship" required>
+                            <option selected>husband</option>
+                            <option>not-in-family</option>
+                            <option>other-relative</option>
+                            <option>own-child</option>
+                            <option>unmarried</option>
+                            <option>wife</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Capital Gains</label>
+                        <input class="form-control" type="number" name="col_cap_gains" min='-100000' 
+                            max='100000' value="10000" required />
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Policy State</label>
+                        <select class="form-select" name="col_policy_state" required>
+                            <option selected>IL</option>
+                            <option>IN</option>
+                            <option>OH</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Annual Premium</label>
+                        <input class="form-control" type="number" name="col_policy_annual_premium"
+                            min='0' max='10000' value="1500" required />
+                    </div>
+                </div>
+                <div class="row mb-4 mb-lg-5">
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Liability Low</label>
+                        <select class="form-select" name="col_policy_csl_low" required>
+                            <option selected>100</option>
+                            <option>250</option>
+                            <option>500</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Liability High</label>
+                        <select class="form-select" name="col_policy_csl_High" required>
+                            <option selected>300</option>
+                            <option>500</option>
+                            <option>1000</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Deductible</label>
+                        <select class="form-select" name="col_policy_deductable" required>
+                            <option selected>500</option>
+                            <option>1000</option>
+                            <option>2000</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Umbrella limit</label>
+                        <select class="form-select" name="col_umbrella_limit" required>
+                            <option>0</option>
+                            <option selected>1000000</option>
+                            <option>2000000</option>
+                            <option>3000000</option>
+                            <option>4000000</option>
+                            <option>5000000</option>
+                            <option>6000000</option>
+                            <option>7000000</option>
+                            <option>8000000</option>
+                            <option>9000000</option>
+                            <option>10000000</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-4 mb-lg-5">
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Incident Type</label>
+                        <select class="form-select" name="col_incident_type" required>
+                            <option selected>Parked Car</option>
+                            <option>Vehicle Theft</option>
+                            <option>Single Vehicle Collision</option>
+                            <option>Multi-vehicle Collision</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Collision Type</label>
+                        <select class="form-select" name="col_collision_type" required>
+                            <option selected>Rear Collision</option>
+                            <option>Side Collision</option>
+                            <option>Front Collision</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Incident Severity</label>
+                        <select class="form-select" name="col_incident_severity" required>
+                            <option>Trivial Damage</option>
+                            <option>Minor Damage</option>
+                            <option>Major Damage</option>
+                            <option selected>Total Loss</option>
+                        </select>
+                    </div> 
+                    <div class="col-lg-3 col-sm-5 text-center">
+                        <label class="my-1 me-2">Number of Vehicles Involved</label>
+                        <input class="form-control" type="number" name="col_number_of_vehicles_involved"
+                            min='0' max='5' value="1" required />
+                    </div>
+                </div>
+                <div class="row mb-4 mb-lg-5">
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Time Of Day</label>
+                        <select class="form-select" name="col_incident_hour_of_the_day" required>
+                            <option>Morning</option>
+                            <option>Day</option>
+                            <option>Evening</option>
+                            <option selected>Night</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Out Of State</label>
+                        <select class="form-select" name="col_out_of_state" placeholder="Out of State" required>
+                            <option class="placeholder" selected disabled value="">Out of State</option>
+                            <option selected>YES</option>
+                            <option>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Days since inception</label>
+                        <input class="form-control" type="number" name="col_incident_days_since_inception"
+                            min='0' max='10000' value="100" required />
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Authorities Contacted</label>
+                        <select class="form-select" name="col_authorities_contacted" required>
+                            <option selected>None</option>
+                            <option>Police</option>
+                            <option>Ambulance</option>
+                            <option>Fire</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-4 mb-lg-5">
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Number of Witnesses</label>
+                        <select class="form-select" name="col_witnesses" required>
+                            <option selected>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Police Report Available</label>
+                        <select class="form-select" name="col_police_report_available" required>
+                            <option>YES</option>
+                            <option selected>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Property Damaged</label>
+                        <select class="form-select" name="col_property_damage" required>
+                            <option selected>YES</option>
+                            <option>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-sm-5 text-center">
+                        <label class="my-1 me-2">Bodily Injuries</label>
+                        <select class="form-select" name="col_bodily_injuries" required>
+                            <option>0</option>
+                            <option selected>1</option>
+                            <option>2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-4 mb-lg-5">
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Model Year</label>
+                        <input class="form-control" type="number" name="col_auto_year"
+                            min='1995' max='2023' value="2005" required />
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Injury Claim</label>
+                        <input class="form-control" type="number" name="col_injury_claim"
+                            min='0' max='30000' value="10000" required />
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Property Claim</label>
+                        <input class="form-control" type="number" name="col_property_claim"
+                            min='0' max='30000' value="10000" required />
+                    </div>
+                    <div class="col-lg-3 col-sm-5">
+                        <label class="my-1 me-2">Vehicle Claim</label>
+                        <input class="form-control" type="number" name="col_vehicle_claim"
+                            min='0' max='100000' value="10000" required />
+                    </div>
+                </div>
                 <div class="row mb-4 mb-lg-5 justify-content-center">
-                    <div class="col-lg-2 col-sm-3 text-center">
-                        <!--<label class="my-1 me-2" for="gender">Gender</label>-->
-                        <select class="form-select" name="gender" id="gender" placeholder="Select Gender" required>
-                            <option class="placeholder" selected disabled value="">Select Gender</option>
-                            <option value="male">
-                                Male
-                            </option>
-                            <option value="female">
-                                Female
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-lg-2 col-sm-3 text-center">
-                        <select class="form-select" name="ethnicity" placeholder="Select Race" required>
-                            <option class="placeholder" selected disabled value="">Select Race</option>
-                            <option value="group A">
-                                Group A
-                            </option>
-                            <option value="group B">
-                                Group B
-                            </option>
-                            <option value="group C">
-                                Group C
-                            </option>
-                            <option value="group D">
-                                Group D
-                            </option>
-                            <option value="group E">
-                                Group E
-                            </option>
-                        </select>
-                    </div>
                     <div class="col-lg-4 col-sm-6 text-center">
-                        <select class="form-select" name="parental_level_of_education"
-                            placeholder="Select Parent Education" required>
-                            <option class="placeholder" selected disabled value="">Select Parent Education</option>
-                            <option value="associate's degree">
-                                associate's degree
-                            </option>
-                            <option value="bachelor's degree">
-                                bachelor's degree
-                            </option>
-                            <option value="high school">
-                                high school
-                            </option>
-                            <option value="master's degree">
-                                master's degree
-                            </option>
-                            <option value="some college">
-                                some college
-                            </option>
-                            <option value="some high school">
-                                some high school
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-4 mb-lg-5 justify-content-center">
-                    <div class="col-lg-3 col-sm-5 text-center">
-                        <select class="form-select" name="lunch" placeholder="Select Lunch Type" required>
-                            <option class="placeholder" selected disabled value="">Select Lunch Type</option>
-                            <option value="free/reduced">
-                                free/reduced
-                            </option>
-                            <option value="standard">
-                                standard
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-lg-3 col-sm-5 text-center">
-                        <select class="form-select" name="test_preparation_course" placeholder="Select Test Course"
-                            required>
-                            <option class="placeholder" selected disabled value="">Select Test Course</option>
-                            <option value="none">
-                                None
-                            </option>
-                            <option value="completed">
-                                Completed
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-4 mb-lg-5 justify-content-center">
-                    <div class="col-lg-3 col-sm-5 text-center">
-                        <input class="form-control" type="number" name="reading_score"
-                            placeholder="Reading score (0-100)" min='0' max='100' required />
-                    </div>
-                    <div class="col-lg-3 col-sm-5 text-center">
-                        <input class="form-control" type="number" name="writing_score"
-                            placeholder="Writing Score (0-100)" min='0' max='100' required />
+                        <input class="btn mb-2 mr-2 btn-primary" type="submit" value="Predict" required />
                     </div>
                 </div>
                 <div class="row mb-4 mb-lg-5 justify-content-center">
                     <div class="col-lg-4 col-sm-6 text-center">
-                        <input class="btn mb-2 mr-2 btn-primary" type="submit" value="Predict Math Score" required />
-                    </div>
-                </div>
-                <div class="row mb-4 mb-lg-5 justify-content-center">
-                    <div class="col-lg-4 col-sm-6 text-center">
-
                         <label class="form-label">The prediction is {{results}}.</label>
-
                     </div>
                 </div>
             </div>
