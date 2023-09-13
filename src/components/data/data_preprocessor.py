@@ -4,7 +4,6 @@ import numpy as np
 from src import logger
 
 
-@staticmethod
 def times_of_the_day(hour_day: int) -> str:
     """Method to return times of the day"""
     try:
@@ -19,7 +18,6 @@ def times_of_the_day(hour_day: int) -> str:
         return "Night"
 
 
-@staticmethod
 def preprocess_data(data_frame) -> pd.DataFrame:
     """Method to perform data preprocessing"""
     try:
